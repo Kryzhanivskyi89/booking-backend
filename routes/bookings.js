@@ -57,7 +57,7 @@ router.delete('/:id', authMiddleware, async (req, res) => {
     if (!booking || booking.client.toString() !== req.user.id)
       return res.status(403).json({ message: 'Unauthorized' });
 
-    await booking.remove();
+    await Booking.deleteOne({ _id: booking._id });
     res.json({ message: 'Booking cancelled' });
   } catch (err) {
     res.status(500).json({ message: err.message });
