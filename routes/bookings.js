@@ -7,6 +7,10 @@ const router = express.Router();
 
 //  Створити нове бронювання
 router.post('/', authMiddleware, async (req, res) => {
+  if (req.user.role !== 'client') {
+      return res.status(403).json({ message: 'Only clients can create bookings' });
+    }
+
   try {
     const { business, date, note } = req.body;
     const newBooking = new Booking({
